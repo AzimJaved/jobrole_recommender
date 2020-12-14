@@ -1,8 +1,9 @@
-<div style="display: flex; flex-flow: row; justify-content: center; align-content: center; text-align: center; padding: 1em;">
+<div
+    style="display: flex; flex-flow: row; justify-content: center; align-content: center; text-align: center; padding: 1em;">
     <label style="width: 30%" for="functionalArea">Functional Area</label>
     <div style="padding-left: 1em; width: 40%">
-        <select id="functionalArea" name="functionalArea" theme="light" width="400" placeholder="Choose one"
-            data-search="true">
+        <input class="list" list="functionalArea" id="functionalArea-choice" name="functionalArea"></input>
+        <datalist class="data-list" id="functionalArea" theme="light" placeholder="Choose one" data-search="true">
             <option value="it software - qa & testing">it software - qa & testing</option>
             <option value="journalism">journalism</option>
             <option value="csr & sustainability">csr & sustainability</option>
@@ -49,6 +50,6 @@
             <option value="production">production</option>
             <option value="it software - client/server programming">it software - client/server programming</option>
             <option value="strategy">strategy</option>
-        </select>
+        </datalist>
     </div>
 </div>

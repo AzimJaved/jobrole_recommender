@@ -20,12 +20,12 @@ def homepage():
 @app.route('/recommend',methods = ['POST', 'GET'])
 def recommend():
     if (request.method == 'POST'):
-        ind_ = request.form['Industry']
-        f_area_ = request.form['Functional Area']
-        sk1_ = request.form['Skill 1']
-        sk2_ = request.form['Skill 2']
-        sk3_ = request.form['Skill 3']
-        sk4_ = request.form['Skill 4']
+        ind_ = request.form['industry']
+        f_area_ = request.form['functionalArea']
+        sk1_ = request.form['skill1']
+        sk2_ = request.form['skill2']
+        sk3_ = request.form['skill3']
+        sk4_ = request.form['skill4']
         f_area = lst_dct[1][f_area_]
         ind = lst_dct[2][ind_]
         

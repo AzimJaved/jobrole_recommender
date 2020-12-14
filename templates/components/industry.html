@@ -1,7 +1,9 @@
 <div style="display: flex; flex-flow: row; justify-content: center; align-content: center; text-align: center; padding: 1em;">
     <label style="width: 30%" for="industry">Industry</label>
     <div style="padding-left: 1em; width: 40%">
-        <select id="industry" name="industry" theme="light" width="400" placeholder="Choose one" data-search="true">
+        <input class="list" list="industry" id="industry-choice" name="industry"></input>
+
+        <datalist class="data-list" id="industry" theme="light">
             <option value="mining / quarrying">mining / quarrying</option>
             <option value="travel / hotels / restaurants / airlines / railways">travel / hotels / restaurants / airlines
                 / railways</option>
@@ -109,6 +111,6 @@
             <option value="medical / healthcare / hospitals">medical / healthcare / hospitals</option>
             <option value="shipping">shipping</option>
             <option value="media">media</option>
-        </select>
+        </datalist>
     </div>
 </div>

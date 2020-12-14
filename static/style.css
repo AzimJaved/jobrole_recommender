@@ -14,6 +14,17 @@ body {
   background-attachment: fixed;
 }
 
+.list {
+  width: 20em;
+  height: 1.5em;
+  font-size: 1.2em;
+}
+
+.data-list {
+  width: 20em;
+  height: 1.5em;
+  font-size: 1.2em;
+}
 .registerbtn {
   background-color: #ff0000;
   color: white;
