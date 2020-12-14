@@ -4,67 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <title>Career Planning</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" type="text/css" href="/static/style.css">
+  <link rel="stylesheet" type="text/css" href="/static/selectstyle.css">
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script src="/static/selectstyle.js"></script>
 </head>
 
 <body>
-  <form action="{{url_for('recommend')}}" method="POST">
-    <div class="row">
-      <div class="col-6 col-s-12" style="margin-left:auto; margin-right:auto;">
-        <h1 align=center>GetBoarded on Success</h1>
-        <h4 align=center>Job Role Recommender and Job Readiness Calculator</h4>
-        <hr>
-      </div>
 
-      <div class="col-3 col-s-12" style="margin-left:auto; margin-right:auto;">
-        <label for="combo1" class="combo-label"><b>Industry</b></label>
-        <div class="combo js-combobox" id="ind">
-          <input aria-activedescendant="" aria-autocomplete="none" aria-controls="listbox1" aria-expanded="false"
-            aria-haspopup="listbox" id="combo1" class="combo-input" role="combobox" type="text" />
-          <div class="combo-menu" role="listbox" id="listbox1"></div>
-        </div>
-        <label for="combo2" class="combo-label"><b>Functional Area</b></label>
-        <div class="combo js-combobox" id="func">
-          <input aria-activedescendant="" aria-autocomplete="none" aria-controls="listbox2" aria-expanded="false"
-            aria-haspopup="listbox" id="combo2" class="combo-input" role="combobox" type="text" />
-          <div class="combo-menu" role="listbox" id="listbox2"></div>
-        </div>
-        <b>Your Top 4 Skills</b>
-        <label for="combo3" class="combo-label"><b>Skill 1</b></label>
-        <div class="combo js-combobox" id="s1">
-          <input aria-activedescendant="" aria-autocomplete="none" aria-controls="listbox3" aria-expanded="false"
-            aria-haspopup="listbox" id="combo2" class="combo-input" role="combobox" type="text" />
-          <div class="combo-menu" role="listbox" id="listbox3"></div>
-        </div>
-        <label for="combo4" class="combo-label"><b>Skill 2</b></label>
-        <div class="combo js-combobox" id="s2">
-          <input aria-activedescendant="" aria-autocomplete="none" aria-controls="listbox4" aria-expanded="false"
-            aria-haspopup="listbox" id="combo4" class="combo-input" role="combobox" type="text" />
-          <div class="combo-menu" role="listbox" id="listbox4"></div>
-        </div>
-        <label for="combo5" class="combo-label"><b>Skill 3</b></label>
-        <div class="combo js-combobox" id="s3">
-          <input aria-activedescendant="" aria-autocomplete="none" aria-controls="listbox5" aria-expanded="false"
-            aria-haspopup="listbox" id="combo5" class="combo-input" role="combobox" type="text" />
-          <div class="combo-menu" role="listbox" id="listbox5"></div>
-        </div>
-        <label for="combo6" class="combo-label"><b>Skill 4</b></label>
-        <div class="combo js-combobox" id="s4">
-          <input aria-activedescendant="" aria-autocomplete="none" aria-controls="listbox6" aria-expanded="false"
-            aria-haspopup="listbox" id="combo6" class="combo-input" role="combobox" type="text" />
-          <div class="combo-menu" role="listbox" id="listbox6"></div>
-        </div>
-
-
+  <div class="container">
+    <div style="margin-left:auto; margin-right:auto;">
+      <h1 style="text-align:center;">GetBoarded on Success</h1>
+      <h4 style="text-align:center;">Job Role Recommender and Job Readiness Calculator</h4>
+      <hr>
+    </div>
+    <form action="{{url_for('recommend')}}" method="POST">
+      <div>
+        {% include 'components/industry.html' %}
+        {% include 'components/functionalArea.html' %}
+        {% include 'components/skill1.html' %}
+        {% include 'components/skill2.html' %}
+        {% include 'components/skill3.html' %}
+        {% include 'components/skill4.html' %}
         <button type="submit" class="registerbtn">Predict</button>
       </div>
-      <div class="col-6 col-s-12" style="margin-left:auto; margin-right:auto;">
-        <hr>
-      </div>
+    </form>
+    <div style="margin-left:auto; margin-right:auto;">
+      <hr>
     </div>
-    <script src="/static/function.js"></script>
-  </form>
+  </div>
+  <script src="/static/script.js"></script>
+  <script>
+    jQuery(document).ready(function ($) {
+      $('select').selectstyle({
+        width: 400,
+        height: 300,
+        theme: 'light',
+        onchange: function (val) { }
+      });
+    });
+  </script>
 </body>
 
 </html>
