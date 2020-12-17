@@ -1,8 +1,7 @@
 
 import numpy as np 
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-import pickle
+import pickle4 as pickle
 
 
 data=pd.read_csv('final_dataset.csv')
@@ -73,6 +72,6 @@ from sklearn.ensemble import RandomForestClassifier
 forest=RandomForestClassifier()
 forest.fit(X_train,y_train)
 
-pickle.dump(forest,open('model.pkl','wb'))
+pickle.dump(forest,open('model.pkl','wb'), protocol = -1)
 
 

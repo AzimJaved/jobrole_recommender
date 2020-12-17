@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import jsonify
-import pickle
+import pickle4 as pickle
 import numpy as np
 import pandas as pd
 import itertools
