@@ -1,4 +1,3 @@
-import itertools
 <!DOCTYPE html>
 <html>
 
@@ -8,10 +7,13 @@ import itertools
 
 <body>
 
-    {% if len(result) > 0 %}
+    {% if 1 %}
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
+    {{sen}}
+
+    {{tab}}
 
 
     {% for i,j in itertools.zip_longest(sen, tab) %}

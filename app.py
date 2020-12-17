@@ -3,6 +3,7 @@ import jsonify
 import pickle
 import numpy as np
 import pandas as pd
+import itertools
 from model import lst_dct
 
 app = Flask(__name__)
@@ -20,6 +21,7 @@ def homepage():
 @app.route('/recommend',methods = ['POST', 'GET'])
 def recommend():
     if (request.method == 'POST'):
+        print(request.form)
         ind_ = request.form['industry']
         f_area_ = request.form['functionalArea']
         sk1_ = request.form['skill1']
@@ -35,7 +37,7 @@ def recommend():
         sk4 = lst_dct[6][sk4_]
         
         predicted_rolecat = []
-        data_j=data[((data['Functional Area'] == f_area_) | (data['Industry'] == 'ind_')) & ((data['Skill1']==sk1_) & (data['Skill2']==sk2_) & (data['Skill3']==sk3_) & (data['Skill4']==sk4_))]
+        data_j=data[((data['Functional Area'] == f_area_) | (data['Industry'] == 'ind_')) & ((data['skill1']==sk1_) & (data['skill2']==sk2_) & (data['skill3']==sk3_) & (data['skill4']==sk4_))]
         if len(data_j) > 0:
             p=list(set(list(data_j['Role Category'].values)))
             predicted_rolecat.extend(p)
@@ -97,7 +99,7 @@ def recommend():
                         intermed.append([role, sk, 5])
             ready.append(d1)
             final.append(intermed)
-        return render_template('results.html', sen = final, tab = ready)
+        return render_template('results.html', sen = final, tab = ready, itertools=itertools)
     
     
 def readiness(x, cat, role, sk_inp):
