@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import jsonify
-import pickle
+import pickle4 as pickle
 import numpy as np
 import pandas as pd
 from model import lst_dct
@@ -35,7 +35,7 @@ def recommend():
         sk4 = lst_dct[6][sk4_]
         
         predicted_rolecat = []
-        data_j=data[((data['Functional Area'] == f_area_) | (data['Industry'] == 'ind_')) & ((data['Skill1']==sk1_) & (data['Skill2']==sk2_) & (data['Skill3']==sk3_) & (data['Skill4']==sk4_))]
+        data_j=data[((data['Functional Area'] == f_area_) & (data['Industry'] == 'ind_')) & ((data['Skill1']==sk1_) | (data['Skill2']==sk2_) | (data['Skill3']==sk3_) | (data['Skill4']==sk4_))]
         if len(data_j) > 0:
             p=list(set(list(data_j['Role Category'].values)))
             predicted_rolecat.extend(p)
