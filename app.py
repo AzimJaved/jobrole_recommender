@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, redirect, url_for
-import jsonify
 import pickle
 import numpy as np
 import pandas as pd
@@ -21,29 +20,29 @@ def homepage():
 @app.route('/recommend',methods = ['POST', 'GET'])
 def recommend():
     if (request.method == 'POST'):
-        print(request.form)
-        ind_ = request.form['industry']
-        f_area_ = request.form['functionalArea']
-        sk1_ = request.form['skill1']
-        sk2_ = request.form['skill2']
-        sk3_ = request.form['skill3']
-        sk4_ = request.form['skill4']
+        ind_ = request.form['Industry']
+        f_area_ = request.form['Functional Area']
+        sk1_ = request.form['Skill 1']
+        sk2_ = request.form['Skill 2']
+        sk3_ = request.form['Skill 3']
+        sk4_ = request.form['Skill 4']
+        sk5_ = request.form['Skill 5']
+
         f_area = lst_dct[1][f_area_]
         ind = lst_dct[2][ind_]
-        
         sk1 = lst_dct[3][sk1_]
         sk2 = lst_dct[4][sk2_]
         sk3 = lst_dct[5][sk3_]
         sk4 = lst_dct[6][sk4_]
-        
+        sk5 = lst_dct[7][sk5_]
         predicted_rolecat = []
-        data_j=data[((data['Functional Area'] == f_area_) | (data['Industry'] == 'ind_')) & ((data['skill1']==sk1_) & (data['skill2']==sk2_) & (data['skill3']==sk3_) & (data['skill4']==sk4_))]
+        data_j=data[((data['Functional Area'] == f_area_) & (data['Industry'] == 'ind_')) & ((data['Skill1']==sk1_) | (data['Skill2']==sk2_) | (data['Skill3']==sk3_) | (data['Skill4']==sk4_) | (data['Skill5']==sk5_))]
         if len(data_j) > 0:
             p=list(set(list(data_j['Role Category'].values)))
             predicted_rolecat.extend(p)
         
-        test = ['Functional Area_encoded', 'Industry_encoded','Skill1_encoded','Skill2_encoded','Skill3_encoded','Skill4_encoded']
-        param = [f_area,ind,sk1,sk2,sk3,sk4]
+        test = ['Functional Area_encoded', 'Industry_encoded','Skill1_encoded','Skill2_encoded','Skill3_encoded','Skill4_encoded','Skill5_encoded']
+        param = [f_area,ind,sk1,sk2,sk3,sk4,sk5]
         data_test = {}
         i = 0
         for col in test:
@@ -73,7 +72,7 @@ def recommend():
 
         final = []
         ready = []
-        sk_inp = [sk1_,sk2_,sk3_,sk4_]
+        sk_inp = [sk1_,sk2_,sk3_,sk4_,sk5_]
         for rol_cat in predicted_rolecat:
             data2 = data[data['Role Category'] == rol_cat] #and (data['Functional Area'] == f_area) and (data['Industry'] == ind)]
             role_lt = []
@@ -86,7 +85,7 @@ def recommend():
                     intermed.append([rol_cat, role, 5])
             for role in role_lt :
                     data3 = data2[data['Role'] == role]
-                    sc = ['Skill1','Skill2','Skill3','Skill4']
+                    sc = ['Skill1','Skill2','Skill3','Skill4','Skill5']
                     for c in sc:
                         for skill in list(data3[c].values):
                             skill = skill.lower()
@@ -107,7 +106,7 @@ def readiness(x, cat, role, sk_inp):
     for i in sk_inp:
         if i in x:
             r = r + 1
-    if r >= 3:
+    if r >= 4:
         t = [role, True, False, False]
         return t
 
@@ -122,4 +121,4 @@ def readiness(x, cat, role, sk_inp):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
