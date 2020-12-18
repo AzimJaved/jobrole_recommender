@@ -1,7 +1,7 @@
 
 import numpy as np 
 import pandas as pd
-import pickle4 as pickle
+import pickle
 
 
 data=pd.read_csv('final_dataset.csv')
@@ -18,7 +18,7 @@ for col in ['skill1', 'skill2', 'skill3', 'skill4']:
 data.drop(columns = ['skill1', 'skill2', 'skill3', 'skill4', 'Unnamed: 0', 'Key Skills'], axis = 1, inplace=True)
 data.rename(columns={'Role':'Job Role','Role Category':'Role'},inplace=True)
 data.rename(columns={'Job Role':'Role Category'},inplace=True)
-data = data.drop(index=[1338,11854,13166,29456])
+# data = data.drop(index=[1338,11854,13166,29456])
 
 sk_col = ['Skill1', 'Skill2', 'Skill3', 'Skill4']
 s1 = list(data['Skill1'].values)
@@ -72,6 +72,6 @@ from sklearn.ensemble import RandomForestClassifier
 forest=RandomForestClassifier()
 forest.fit(X_train,y_train)
 
-pickle.dump(forest,open('model.pkl','wb'), protocol = -1)
+pickle.dump(forest,open('model.pkl','wb'), protocol = 4)
 
 
