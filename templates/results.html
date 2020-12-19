@@ -11,22 +11,20 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
-    {{sen}}
 
-    {{tab}}
+    <p>TAB</p>
 
-
+    <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
     {% for i,j in itertools.zip_longest(sen, tab) %}
-
     <script type="text/javascript">
-        google.charts.load("current", { packages: ["sankey"] });
+        google.charts.load("current", { packages: ["sankey", "table"] });
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'From');
             data.addColumn('string', 'To');
             data.addColumn('number', 'Weight');
-            data.addRows({ i });
+            data.addRows(JSON.parse(`{{ i|tojson }}`));
 
             // Set chart options
             var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
@@ -54,7 +52,6 @@
             chart.draw(data, options);
         }
 
-        <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
         function drawChart2() {
             // Define the chart to be drawn.
             var data = new google.visualization.DataTable();
@@ -62,7 +59,7 @@
             data.addColumn('boolean', 'Now');
             data.addColumn('boolean', 'Short-Term');
             data.addColumn('boolean', 'Medium-Term');
-            data.addRows({ j });
+            data.addRows(JSON.parse(`{{ j|tojson }}`));
 
             var options = {
                 showRowNumber: false,

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 import pickle
 import numpy as np
 import pandas as pd
@@ -20,13 +20,13 @@ def homepage():
 @app.route('/recommend',methods = ['POST', 'GET'])
 def recommend():
     if (request.method == 'POST'):
-        ind_ = request.form['Industry']
-        f_area_ = request.form['Functional Area']
-        sk1_ = request.form['Skill 1']
-        sk2_ = request.form['Skill 2']
-        sk3_ = request.form['Skill 3']
-        sk4_ = request.form['Skill 4']
-        sk5_ = request.form['Skill 5']
+        ind_ = request.form['industry']
+        f_area_ = request.form['functionalArea']
+        sk1_ = request.form['skill1']
+        sk2_ = request.form['skill2']
+        sk3_ = request.form['skill3']
+        sk4_ = request.form['skill4']
+        sk5_ = request.form['skill5']
 
         f_area = lst_dct[1][f_area_]
         ind = lst_dct[2][ind_]
@@ -36,7 +36,7 @@ def recommend():
         sk4 = lst_dct[6][sk4_]
         sk5 = lst_dct[7][sk5_]
         predicted_rolecat = []
-        data_j=data[((data['Functional Area'] == f_area_) & (data['Industry'] == 'ind_')) & ((data['Skill1']==sk1_) | (data['Skill2']==sk2_) | (data['Skill3']==sk3_) | (data['Skill4']==sk4_) | (data['Skill5']==sk5_))]
+        data_j=data[((data['Functional Area'] == f_area_) & (data['Industry'] == ind_)) & ((data['Skill1']==sk1_) | (data['Skill2']==sk2_) | (data['Skill3']==sk3_) | (data['Skill4']==sk4_) | (data['Skill5']==sk5_))]
         if len(data_j) > 0:
             p=list(set(list(data_j['Role Category'].values)))
             predicted_rolecat.extend(p)
@@ -61,7 +61,6 @@ def recommend():
                 for key,value in lst_dct[0].items():
                     if value == code:
                         predicted_rolecat.append(key)
-        print(predicted_rolecat)
         fin = []
         for rc in predicted_rolecat:
             if rc in list(set(list(data['Role Category'].values))):
@@ -98,7 +97,8 @@ def recommend():
                         intermed.append([role, sk, 5])
             ready.append(d1)
             final.append(intermed)
-        return render_template('results.html', sen = final, tab = ready, itertools=itertools)
+        return render_template('results.html', sen = final, tab = ready, itertools=itertools, jsonify=jsonify)
+        # return jsonify({'sen': final, 'tab': ready})
     
     
 def readiness(x, cat, role, sk_inp):
