@@ -2,82 +2,89 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Result</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 
 <body>
+    <div class="container">
+        <div style="margin-left:auto; margin-right:auto;">
+            <h1 style="text-align:center;">GetBoarded on Success</h1>
+            <h4 style="text-align:center;">Job Role Recommender and Job Readiness Report</h4>
+            <hr>
+        </div>
 
-    {% if 1 %}
+        {% if sen|length != 0 %}
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <div style="display: flex; flex-flow: column; align-content: center; justify-content: center;  padding: 2em;">
+            <div id="sankey_multiple" style="margin: 0 auto"></div>
+        </div>
+        <div id="table-container" style="width: 550px; height: 400px; margin: 0 auto"></div>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
+        {% for i,j in itertools.zip_longest(sen, tab) %}
+        <script type="text/javascript">
+            google.charts.load("current", { packages: ["sankey", "table"] });
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'From');
+                data.addColumn('string', 'To');
+                data.addColumn('number', 'Weight');
+                data.addRows(JSON.parse(`{{ i|tojson }}`));
 
-    <p>TAB</p>
-
-    <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
-    {% for i,j in itertools.zip_longest(sen, tab) %}
-    <script type="text/javascript">
-        google.charts.load("current", { packages: ["sankey", "table"] });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'From');
-            data.addColumn('string', 'To');
-            data.addColumn('number', 'Weight');
-            data.addRows(JSON.parse(`{{ i|tojson }}`));
-
-            // Set chart options
-            var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
-                '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
-            var options = {
-                width: 800,
-                height: 500,
-                sankey: {
-                    link: { colorMode: 'gradient', color: { stroke: 'white', strokeWidth: 0.1 } },
-                    node: {
-                        width: 10, colors: colors, labelPadding: 10, nodePadding: 20,
-                        label: {
-                            color: '#01070a',
-                            fontName: 'Times-Roman',
-                            fontSize: 15,
-                            bold: true,
-                            italic: true
+                // Set chart options
+                var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+                    '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+                var options = {
+                    width: 800,
+                    height: 500,
+                    sankey: {
+                        link: { colorMode: 'gradient', color: { stroke: 'white', strokeWidth: 0.1 } },
+                        node: {
+                            width: 10, colors: colors, labelPadding: 10, nodePadding: 20,
+                            label: {
+                                color: '#01070a',
+                                fontName: 'Times-Roman',
+                                fontSize: 15,
+                                bold: true,
+                                italic: true
+                            }
                         }
-                    }
-                },
-            };
+                    },
+                };
 
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
-            chart.draw(data, options);
-        }
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+                chart.draw(data, options);
+            }
 
-        function drawChart2() {
-            // Define the chart to be drawn.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Job Role');
-            data.addColumn('boolean', 'Now');
-            data.addColumn('boolean', 'Short-Term');
-            data.addColumn('boolean', 'Medium-Term');
-            data.addRows(JSON.parse(`{{ j|tojson }}`));
+            function drawChart2() {
+                // Define the chart to be drawn.
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Job Role');
+                data.addColumn('boolean', 'Now');
+                data.addColumn('boolean', 'Short-Term');
+                data.addColumn('boolean', 'Medium-Term');
+                data.addRows(JSON.parse(`{{ j|tojson }}`));
 
-            var options = {
-                showRowNumber: false,
-                width: '100%',
-                height: '100%'
-            };
+                var options = {
+                    showRowNumber: false,
+                    width: '100%',
+                    height: '100%'
+                };
 
-            // Instantiate and draw the chart.
-            var chart = new google.visualization.Table(document.getElementById('container'));
-            chart.draw(data, options);
-        }
-        google.charts.setOnLoadCallback(drawChart2);
-    </script>
-    {% endfor %}
-    {% else %}
-    <p>"Sorry! No job role could be predicted"</p>
-    {% endif %}
-
+                // Instantiate and draw the chart.
+                var chart = new google.visualization.Table(document.getElementById('table-container'));
+                chart.draw(data, options);
+            }
+            google.charts.setOnLoadCallback(drawChart2);
+        </script>
+        {% endfor %}
+        {% else %}
+        <p>"Sorry! No job role could be predicted"</p>
+        {% endif %}
+    </div>
 </body>
 
 </html>
