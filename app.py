@@ -7,9 +7,9 @@ from model import lst_dct
 
 app = Flask(__name__)
 
-data = pd.read_csv('final_dataset.csv')
+data = pd.read_csv('final_dataset_test.csv')
 
-forest=pickle.load(open('model.pkl','rb'))
+forest=pickle.load(open('_model.pkl','rb'))
 
 
 @app.route('/')
