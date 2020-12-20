@@ -15,7 +15,8 @@
       <h4 style="text-align:center;">Job Role Recommender and Job Readiness Calculator</h4>
       <hr>
     </div>
-    <form action="{{url_for('recommend')}}" method="POST">
+    <!-- action="{{url_for('recommend')}}" -->
+    <form id="job-form" method="POST">
       <div>
         {% include 'components/industry.html' %}
         {% include 'components/functionalArea.html' %}
@@ -24,13 +25,14 @@
         {% include 'components/skill3.html' %}
         {% include 'components/skill4.html' %}
         {% include 'components/skill5.html' %}
-        <button type="submit" class="registerbtn">Predict</button>
+        <button type="button" class="registerbtn" onclick="validateForm()">Predict</button>
       </div>
     </form>
     <div style="margin-left:auto; margin-right:auto;">
       <hr>
     </div>
   </div>
+  <script src="/static/script.js"></script>
 </body>
 
 </html>
