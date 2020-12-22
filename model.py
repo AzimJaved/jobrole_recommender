@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import pickle
 
-data = pd.read_csv('final_dataset_prod.csv' if os.environ.get('FLASK_MODEL_ENV') == 'prod' else 'final_dataset_prod.csv')
+data = pd.read_csv('final_dataset_prod.csv' if os.environ.get('FLASK_MODEL_ENV') == 'prod' else 'final_dataset_test.csv')
 
 stringcols = ('Role Category','Functional Area','Industry','Skill1','Skill2','Skill3','Skill4','Skill5')
 from sklearn.preprocessing import LabelEncoder 
