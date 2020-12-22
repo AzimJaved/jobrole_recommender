@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, render_template, redirect, url_for, jsonify
 import pickle
 import numpy as np
@@ -7,13 +8,14 @@ from model import lst_dct
 
 app = Flask(__name__)
 
-data = pd.read_csv('final_dataset_prod.csv')
+data = pd.read_csv('final_dataset_prod.csv' if os.environ.get('FLASK_MODEL_ENV') == 'prod' else 'final_dataset_prod.csv')
 
-forest=pickle.load(open('model.pkl','rb'))
+forest=pickle.load(open('model.pkl' if os.environ.get('FLASK_MODEL_ENV') == 'prod' else '_model.pkl','rb'))
 
 
 @app.route('/')
 def homepage():
+    print(os.environ.get('FLASK_MODEL_ENV'))
     return render_template("homepage.html")
 
 

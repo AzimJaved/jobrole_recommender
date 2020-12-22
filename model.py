@@ -1,9 +1,10 @@
 
 import numpy as np 
+import os
 import pandas as pd
 import pickle
 
-data=pd.read_csv('final_dataset_prod.csv')
+data = pd.read_csv('final_dataset_prod.csv' if os.environ.get('FLASK_MODEL_ENV') == 'prod' else 'final_dataset_prod.csv')
 
 stringcols = ('Role Category','Functional Area','Industry','Skill1','Skill2','Skill3','Skill4','Skill5')
 from sklearn.preprocessing import LabelEncoder 
@@ -35,6 +36,6 @@ from sklearn.ensemble import RandomForestClassifier
 forest=RandomForestClassifier()
 forest.fit(X_train,y_train)
 
-pickle.dump(forest,open('model.pkl','wb'), protocol = -1)
+pickle.dump(forest,open('model.pkl' if os.environ.get('FLASK_MODEL_ENV') == 'prod' else '_model.pkl','wb'), protocol = -1)
 
 
