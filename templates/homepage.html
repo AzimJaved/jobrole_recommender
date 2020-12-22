@@ -15,8 +15,8 @@
       <h4 style="text-align:center;">Job Role Recommender and Job Readiness Calculator</h4>
       <hr>
     </div>
-    <!-- action="{{url_for('recommend')}}" -->
-    <form id="job-form" method="POST">
+    
+    <form action="{{url_for('recommend')}}" id="job-form" method="POST">
       <div>
         {% include 'components/industry.html' %}
         {% include 'components/functionalArea.html' %}
