@@ -35,6 +35,6 @@ from sklearn.ensemble import RandomForestClassifier
 forest=RandomForestClassifier()
 forest.fit(X_train,y_train)
 
-pickle.dump(forest,open('model.pkl','wb'), protocol = 4)
+pickle.dump(forest,open('model.pkl','wb'), protocol = -1)
 
 
